@@ -14,16 +14,7 @@ import { SwaggerApiResponseData } from '../common/decorator/swagger.decorator';
 import { AuthResponseDto } from '../model/response/auth-response.dto';
 import { VerifyRegistrationDto } from '../model/request/verify-registration.dto';
 import type { Request } from 'express';
-// import { Request } from 'express'; // Keeping value import locally but used in decorator? 
-// The error requires `import type` OR namespace import. 
-// "must be imported with 'import type' or a namespace import"
-// Let's use `import type` and see.
-// But wait, if I use `import type`, then `@Req() req: Request`, `Request` is checked?
-// NestJS uses Reflect.
-// If I use `import type`, usage as value is not allowed. 
-// But `@Req()` param type IS a value usage in metadata emit?
-// Actually `import type` works fine for `design:paramtypes` (emits Object).
-// So let's change line 16.
+
 
 import { AuthRequestDto } from '../model/request/auth-request.dto';
 import { LogoutRequestDto } from '../model/request/logout-request.dto';

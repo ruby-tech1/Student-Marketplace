@@ -26,7 +26,6 @@ import { AuthController } from './controller/auth.controller';
 import { UserController } from './controller/user.controller';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { AllExceptionFilter } from './all-exception.filter';
-import AppDataSource from './config/typeorm.config';
 
 @Module({
   imports: [
@@ -89,7 +88,6 @@ import AppDataSource from './config/typeorm.config';
               user: emailConfig.username,
               pass: emailConfig.password,
             },
-            requireTLS: true,
             logger: appConfig?.env === 'dev',
             debug: appConfig?.env === 'dev',
             tls: { rejectUnauthorized: false },

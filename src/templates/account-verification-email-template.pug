@@ -1,0 +1,35 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    style.
+      body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f7; margin: 0; padding: 0; }
+      .container { max-width: 600px; margin: 40px auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+      .header { background: linear-gradient(135deg, #1a1a2e, #16213e); padding: 32px; text-align: center; }
+      .header h1 { color: #ffffff; margin: 0; font-size: 24px; font-weight: 600; }
+      .content { padding: 40px 32px; }
+      .content p { color: #333; font-size: 16px; line-height: 1.6; margin: 0 0 16px; }
+      .otp-box { background: #f0f4ff; border: 2px dashed #4a6cf7; border-radius: 8px; padding: 20px; text-align: center; margin: 24px 0; }
+      .otp-code { font-size: 32px; font-weight: 700; color: #1a1a2e; letter-spacing: 6px; }
+      .link-btn { display: inline-block; background: #4a6cf7; color: #ffffff; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-weight: 600; margin: 24px 0; }
+      .footer { background: #f9fafb; padding: 24px 32px; text-align: center; }
+      .footer p { color: #888; font-size: 13px; margin: 0; }
+  body
+    .container
+      .header
+        h1 Student Marketplace
+      .content
+        p Hi #{name},
+        p Thank you for signing up! Please verify your account using the information below.
+        if token
+          .otp-box
+            p Your verification code:
+            .otp-code #{token}
+        if verificationLink
+          p Click the button below to verify your account:
+          p
+            a.link-btn(href=verificationLink) Verify My Account
+        p This code expires in 15 minutes. If you didn't create an account, please ignore this email.
+      .footer
+        p &copy; Student Marketplace. All rights reserved.

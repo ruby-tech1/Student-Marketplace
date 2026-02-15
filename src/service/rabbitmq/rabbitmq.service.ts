@@ -147,6 +147,12 @@ export class RabbitMQService implements OnModuleInit {
 
     async addQueue(config: QueueConfig): Promise<void> {
         this.rabbitMQConfig.queues.push(config);
+        // If the channel is already initialised (onModuleInit already ran),
+        // configure and start consuming immediately.
+        if (this.channel) {
+            await this.configureQueue(config);
+            await this.consumeQueue(config.name, config.routingKey, config.handler);
+        }
     }
 
     async addToQueue(routingKey: string, data: any) {

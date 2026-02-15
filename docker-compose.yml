@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: student_marketplace_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USERNAME:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_DB: ${DB_NAME:-student_marketplace}
+    ports:
+      - "${DB_PORT:-5434}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - student_marketplace_network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: student_marketplace_pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@admin.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-root}
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+    networks:
+      - student_marketplace_network
+
+  rabbitmq:
+    image: rabbitmq:4-management
+    container_name: student_marketplace_rabbitmq
+    restart: always
+    ports:
+      - "5675:5672"
+      - "15675:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - student_marketplace_network
+
+  maildev:
+    image: maildev/maildev
+    container_name: student_marketplace_maildev
+    restart: always
+    ports:
+      - "${EMAIL_PORT:-1025}:1025" # SMTP
+      - "1080:1080" # Web UI
+    networks:
+      - student_marketplace_network
+
+networks:
+  student_marketplace_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  pgadmin_data:
+  rabbitmq_data:
